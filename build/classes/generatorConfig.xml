@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 配置文件路径 -->
+	<properties resource="db.properties"></properties>
+
+	<!-- 加载JDBC驱动 -->
+	<classPathEntry location="C:\Users\12644\workspace_eclipse_jee\java_web_pro\WebContent\WEB-INF\lib\mysql-connector-java-5.1.7-bin.jar" />
+
+	<!-- id随意取名  targetRuntime的意思是用的什么版本 -->
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+		
+		<!--关闭注释  true关闭  false不关闭 -->
+		<commentGenerator>
+			<property name="suppressDate" value="false" />
+		</commentGenerator>
+
+		<!--数据库连接信息 -->
+		<jdbcConnection driverClass="${driver}" connectionURL="${url}"
+			userId="${username}" password="${password}">
+		</jdbcConnection>
+
+		<!--生成的model包路径  就是实体类 -->
+		<javaModelGenerator targetPackage="${beans}" targetProject="${project}">
+			<!-- 是否有子包   true有子包   false没有子包 (一般默认不要动)-->
+			<property name="enableSubPackages" value="ture" />
+			<!-- 时间格式 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!--生成xml mapper文件 路径 -->
+		<sqlMapGenerator targetPackage="${dao}" targetProject="${project}">
+			<!-- 是否有子包 -->
+			<property name="enableSubPackages" value="ture" />
+		</sqlMapGenerator>
+
+		<!-- 生成的Dao接口 的包路径 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="${dao}" targetProject="${project}">
+			<!-- 是否有子包 -->
+			<property name="enableSubPackages" value="ture" />
+		</javaClientGenerator>
+
+		<!--对应数据库表名 (要生成哪些表)-->
+		<!-- 
+		tableName(表名称)
+		enableCountByExample(是否返回所有行的接口并且实现  false不需要  true需要)
+		enableUpdateByExample(是否需要修改的接口并实现)
+		enableDeleteByExample(是否出现删除的接口)
+		enableSelectByExample(是否出现选择的接口)
+		selectByExampleQueryId(是否出现什么什么ID的接口)
+		全部配置为(false)它只会生成简单的(增删改查)接口和MySQL语句
+		 -->
+		<table tableName="areas" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="cities" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="provinces" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_admin" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_comment" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_news" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_pic" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_type" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<table tableName="t_user" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		<!-- 有多个表就复制改下表名就可以了！ -->
+<!-- 		<table tableName="knowledge" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+		</table> -->
+		
+	</context>
+	<!--<commentGenerator> -->
+	<!--<property name="suppressDate" value="false"/> -->
+	<!--</commentGenerator> -->
+</generatorConfiguration>
