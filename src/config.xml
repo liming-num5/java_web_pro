@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--引入数据库的参数properties文件-->
+  <properties resource="db.properties"></properties>
+  
+  <!-- 为项目的javaBean配置短路径 -->
+  <typeAliases>
+     <!-- <typeAlias alias="" type="cn.uc.first.bean"/> -->
+     <package name="cn.uc.yiqibang.beans"/>
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+	        <property name="driver" value="${driver}"/>
+	        <property name="url" value="${url}"/>
+	        <property name="username" value="${user}"/>
+	        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="cn/uc/yiqibang/mapper/AreasMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/CitiesMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/ProvincesMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TAdminMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TCommentMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TNewsMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TPicMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TTypeMapper.xml"></mapper>
+    <mapper resource="cn/uc/yiqibang/mapper/TUserMapper.xml"></mapper>
+  </mappers>
+</configuration>
+  
