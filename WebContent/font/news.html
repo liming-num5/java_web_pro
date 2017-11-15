@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>新闻列表</title>
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-<script type="text/javascript"  src="../jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript"  src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../js/date_util.js"></script>
 <style>
 #search_box {
@@ -38,19 +38,35 @@
 }
 
 .new_item .img_row>div img {
-	width: 100%;
+	height: 130px;
 }
 
 .new_item .cop_row {
 	height: 40px;
 	line-height: 40px;
 }
-#cimg_box img{
-   width:100%;
-   height:250px;
+
+.new_item .cop_row .cop_left>* {
+	margin-right: 10px;
 }
-#news_item_box{
-   margin-top:40px;
+
+.new_item .cop_row .cop_left>.label {
+	padding-top: 0.4em;
+}
+
+#cimg_box img {
+	width: 100%;
+	height: 250px;
+}
+
+#news_item_box {
+	margin-top: 40px;
+}
+
+.carousel-caption {
+	padding-top: 10px;
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3),
+		rgba(0, 0, 0, 0.1));
 }
 </style>
 
@@ -70,7 +86,6 @@
 			success : function(data) {
 				var jsData = JSON.parse(data);
 				$("#type_list").html("");
-				console.log(data);
 				for (var i = 0; i < jsData.retData.length; i++) {
 					var type = jsData.retData[i];
 					var typeNode = '<a onclick="getNewByTypeid(' + type.id
@@ -90,61 +105,85 @@
 
 	//根据类型id获取新闻列表
 	function getNewByTypeid(typeid, index) {
-		$.ajax({
-			url : "/java_web_pro/NewsServlet",
-			data : {
-				action : "getNewsByTypeId",
-				typeid : typeid
-			},
-			type : "get",
-			success : function(data) {
-				console.log(data);
-				var jsData = JSON.parse(data);
-				$("#circle").html("");
-				$("#cimg_box").html("");
-				$("#news_item_box").html("");
-				for(var i=0;i<jsData.retData.length;i++){
-					var news=jsData.retData[i];
-					if(i<3){
-						$("#circle").append('<li data-target="#carousel-example-generic" data-slide-to="'+i+'" class="'+(i==0?"active":"")+'"></li>');
-					    $("#cimg_box").append('<div class="item'+(i==0?" active":"")+'">'
-							+'<img src="../img/car.JPG">'
-							+'<div class="carousel-caption">'+news.nTitle+'</div>'
-						    +'</div>');
-					}else{
-						var newsNode='<div class="new_item">'
-						+'<h4> <a href="#">'+news.nTitle+'</a></h4>'
-						+'<div class="row img_row">'
-							+'<div class="col-md-4">'
-							+'<img src="../img/car.JPG">'
-							+'</div>'
-							+'<div class="col-md-4">'
-							+'<img src="../img/car.JPG">'
-							+'</div>'
-							+'<div class="col-md-4">'
-							+'<img src="../img/car.JPG">'
-							+'</div>'
-							+'</div>'
-						    +'<div class="row cop_row">'
-							+'<div class="col-md-6">'
-							+'<span>已读:888</span> <span>评论:'+news.nCommcount+'</span>'
-							+(news.nIfhot?'<span class="label label-danger">热点</span>':'')
-							+'</div>'
-							+'<div class="col-md-6 text-right">'
-							+'<span>'+getStrDate(news.nCreatetime.time)+'</span>'
-							+'</div>'
-							+'</div>'
-							+'</div>';
-						$("#news_item_box").append(newsNode);
+
+		$
+				.ajax({
+					url : "/java_web_pro/NewsServlet",
+					data : {
+						action : "getNewsByTypeId",
+						typeid : typeid
+					},
+					type : "get",
+					success : function(data) {
+						$("#circle").html("");
+						$("#cimg_box").html("");
+						$("#news_item_box").html("");
+						var jsData = JSON.parse(data);
+						if (jsData.retData.length == 0) {
+							$("#carousel-example-generic").css("display",
+									"none");
+						} else {
+							for (var i = 0; i < jsData.retData.length; i++) {
+								var news = jsData.retData[i];
+								var picArr = news.nPics.split(",");
+								if (i < 3) {
+									$("#circle").append(
+											'<li data-target="#carousel-example-generic" data-slide-to="'
+													+ i + '" class="'
+													+ (i == 0 ? "active" : "")
+													+ '"></li>');
+									$("#cimg_box")
+											.append(
+													'<div class="item'
+															+ (i == 0 ? " active"
+																	: "")
+															+ '">'
+															+ '<img src="'+picArr[0]+'">'
+															+ '<div class="carousel-caption"><h4>'
+															+ news.nTitle
+															+ '</h4></div>'
+															+ '</div>');
+								} else {
+									$("#carousel-example-generic").css("display","block");
+									var newsNode = '<div class="new_item">'
+											+ '<h4> <a href="#">'
+											+ news.nTitle
+											+ '</a></h4>'
+											+ '<div class="row img_row">'
+											+ '<div class="col-md-4">'
+											+ '<img src="'+picArr[0]+'">'
+											+ '</div>'
+											+ '<div class="col-md-4">'
+											+ '<img src="'+picArr[1]+'">'
+											+ '</div>'
+											+ '<div class="col-md-4">'
+											+ '<img src="'+picArr[2]+'">'
+											+ '</div>'
+											+ '</div>'
+											+ '<div class="row cop_row">'
+											+ '<div class="col-md-6 cop_left">'
+											+ '<span>已读:888</span> <span>评论:'
+											+ news.nCommcount
+											+ '</span>'
+											+ (news.nIfhot ? '<span class="label label-danger">热点</span>'
+													: '')
+											+ '</div>'
+											+ '<div class="col-md-6 text-right">'
+											+ '<span>'
+											+ getStrDate(news.nCreatetime.time)
+											+ '</span>'
+											+ '</div>'
+											+ '</div>'
+											+ '</div>';
+									$("#news_item_box").append(newsNode);
+								}
+							}
+						}
+					},
+					error : function(e) {
+						alert("类型新闻失败");
 					}
-					
-					
-				}
-			},
-			error : function(e) {
-				alert("类型新闻失败");
-			}
-		});
+				});
 
 		$("#type_list").find("a").removeClass("active");
 		$("#type_list").find("a").eq(index).addClass("active");
@@ -235,9 +274,7 @@
 					</ol>
 
 					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox" id="cimg_box">
-						
-					</div>
+					<div class="carousel-inner" role="listbox" id="cimg_box"></div>
 
 					<!-- Controls -->
 					<a class="left carousel-control" href="#carousel-example-generic"
@@ -250,9 +287,7 @@
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
-				<div id="news_item_box">
-					
-				</div>
+				<div id="news_item_box"></div>
 			</div>
 			<div class="col-md-3"></div>
 		</div>

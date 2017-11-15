@@ -30,7 +30,6 @@
     <mapper resource="cn/uc/yiqibang/mapper/TAdminMapper.xml"></mapper>
     <mapper resource="cn/uc/yiqibang/mapper/TCommentMapper.xml"></mapper>
     <mapper resource="cn/uc/yiqibang/mapper/TNewsMapper.xml"></mapper>
-    <mapper resource="cn/uc/yiqibang/mapper/TPicMapper.xml"></mapper>
     <mapper resource="cn/uc/yiqibang/mapper/TTypeMapper.xml"></mapper>
     <mapper resource="cn/uc/yiqibang/mapper/TUserMapper.xml"></mapper>
   </mappers>

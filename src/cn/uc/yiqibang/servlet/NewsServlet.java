@@ -1,6 +1,7 @@
 package cn.uc.yiqibang.servlet;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import cn.uc.yiqibang.beans.TNews;
 import cn.uc.yiqibang.dao.TNewsMapper;
 import cn.uc.yiqibang.dao.impl.NewsMapperImpl;
+import cn.uc.yiqibang.utils.ImgUtil;
 import cn.uc.yiqibang.utils.Result;
 import cn.uc.yiqibang.utils.WriteResultToClient;
-import net.sf.json.JSONObject;
 
 @WebServlet("/NewsServlet")
 public class NewsServlet extends BaseServlet {
@@ -46,12 +47,18 @@ public class NewsServlet extends BaseServlet {
 		String source=request.getParameter("source");
 		String author =request.getParameter("author");
 		String content =request.getParameter("content");
+		
+		//从content里面获取图片列表
+		 List<String> list = ImgUtil.getImageSrc(content);  
+		 String picturePath = ImgUtil.listToString(list, ',');
+		 
 		String editorValue=request.getParameter("editorValue");
 		int  typeid=Integer.parseInt(request.getParameter("typeid"));
 	    boolean ifHot=Boolean.parseBoolean(request.getParameter("ifHot"));
 	    
 	    TNews news=new TNews();
 	    news.setnAuthor(author);
+	    news.setnPics(picturePath);
 	    news.setnContent(editorValue);
 	    news.setnCreatetime(new Date());
 	    news.setnIfhot(ifHot);
@@ -69,6 +76,11 @@ public class NewsServlet extends BaseServlet {
 		String source=request.getParameter("source");
 		String author =request.getParameter("author");
 		String content =request.getParameter("content");
+		
+		//从content里面获取图片列表
+		 List<String> list = ImgUtil.getImageSrc(content);  
+		 String picturePath = ImgUtil.listToString(list, ',');
+		 
 		String editorValue=request.getParameter("editorValue");
 		int  typeid=Integer.parseInt(request.getParameter("typeid"));
 	    boolean ifHot=Boolean.parseBoolean(request.getParameter("ifHot"));
@@ -76,6 +88,7 @@ public class NewsServlet extends BaseServlet {
 	    TNews news=new TNews();
 	    news.setId(id);
 	    news.setnAuthor(author);
+	    news.setnPics(picturePath);
 	    news.setnContent(editorValue);
 	    news.setnCreatetime(new Date());
 	    news.setnIfhot(ifHot);

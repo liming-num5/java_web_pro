@@ -95,7 +95,6 @@ table thead tr th {
 	$(function() {
 		getPageAllNews(1);
 		getAllTypes();
-		getPageCounts();
 		$("#pageBtn li").click(function(){
 			if($(this).index()==0){//前一页
 				alert($(this).find("span").text());
@@ -108,9 +107,7 @@ table thead tr th {
 		});
 	});
 	
-	function getPageCounts(){
-		
-	}
+	
 	function getPageAllNews(pagenum) {
 		$('#myModal').modal('show');
 		$.getJSON("/java_web_pro/NewsServlet", {
@@ -123,6 +120,7 @@ table thead tr th {
 
 	function showNewsData(data) {
 		if (data.retMsg) {
+			console.log(data.retData);
 			$("#newsList_body").html("");
 			var newslist = data.retData;
 			for (var i = 0; i < newslist.length; i++) {
@@ -304,7 +302,7 @@ table thead tr th {
 	function searchNewsByLike() {
 		var searchTv = $("#searchTv").val();
 		if (searchTv == "") {
-			getAllNews();
+			getPageAllNews(1);
 		} else {
 			$.ajax({
 				url : "/java_web_pro/NewsServlet",
@@ -433,7 +431,7 @@ table thead tr th {
 						action="/java_web_pro/NewsServlet?action=adminInsertNews"
 						method="post">
 						<div class="form-group">
-						 
+
 							<label class="col-sm-2 control-label">类型</label>
 							<div class="col-sm-8">
 								<select id="typeid" name="typeid" class="form-control"></select>
@@ -443,8 +441,8 @@ table thead tr th {
 							<label class="col-sm-2 control-label">标题</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="title" name="title"
-									placeholder="标题" value="马蓉首现身">
-									<input type="hidden" id="newsid" value="0">
+									placeholder="标题" value="马蓉首现身"> <input type="hidden"
+									id="newsid" value="0">
 							</div>
 						</div>
 						<div class="form-group">
@@ -512,8 +510,10 @@ table thead tr th {
 		initialFrameHeight : 300
 	//更多其他参数，请参考ueditor.config.js中的配置项
 	});
+	
 	//添加新闻按钮点击事件
 	function addNewsSure() {
+		ue.fireEvent('beforeinsertimage');
 		var title = $("#title").val();
 		var source = $('#source').val();
 		var author = $("#author").val();
